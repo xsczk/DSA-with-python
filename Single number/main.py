@@ -28,7 +28,7 @@ class Solution:
         """same_num ^ same_num = 0; 0 ^ single_num = single_num"""
         xor = 0
         for num in nums:
-            """equivalent to xor = xor ^ nums"""
+            """equivalent to xor = xor ^ num"""
             xor ^= num
         return xor
 
