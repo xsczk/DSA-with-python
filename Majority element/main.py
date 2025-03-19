@@ -14,6 +14,8 @@ class Solution:
             if m[num] > len(nums) // 2:
                 return num
 
+    # Time complexity: O(n)
+    # Space complexity: O(1)
     def optimal_majority_element(self, nums: list[int]) -> int:
         majority = nums[0]
         count = 1
