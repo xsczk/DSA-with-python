@@ -19,6 +19,8 @@ class Solution:
             m[hashed].append(s)
         return [ls for ls in m.values()]
 
+    # Time complexity: O(n * k)
+    # Space complexity: O(n * k)
     def frequency_group_anagrams(self, strs: list[str]) -> list[list[str]]:
         m = defaultdict(list)
         for s in strs:
