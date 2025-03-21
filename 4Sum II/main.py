@@ -5,7 +5,8 @@
 nums1[i] + nums2[j] + nums3[k] + nums4[l] == 0"""
 from collections import defaultdict
 
-
+# Time complexity: O(n^2)
+# Space complexity: O(n^2)
 class Solution:
     def four_sum_count(self, nums1: list[int], nums2: list[int], nums3: list[int], nums4: list[int]) -> int:
         m = defaultdict(int)
