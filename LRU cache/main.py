@@ -11,6 +11,7 @@ evict the least recently used key.
 The functions get and put must each run in O(1) average time complexity."""
 from collections import defaultdict, deque
 
+
 # Time complexity: O(1) for both get and put
 # Space complexity: O(capacity)
 class LRUCache:
@@ -30,7 +31,6 @@ class LRUCache:
             self.deq.append(key)
         return val
 
-
     def put(self, key: int, value: int) -> None:
         if key in self.m:
             self.deq.remove(key)
@@ -42,11 +42,39 @@ class LRUCache:
 
 
 """Double linked list version"""
+
+
 class Node:
     def __init__(self, k: int, v: int):
         self.key = k
         self.val = v
-        self.prev = None
-        self.next = None
+        self.prev: Node | None = None
+        self.next: Node | None = None
+
+
 class LRUCache_db_linked_list:
-    pass
+    def __init__(self, capacity: int):
+        self.c = capacity
+        self.m = defaultdict(int)
+        self.head = Node(0, 0)
+        self.tail = Node(0, 0)
+        self.head.next = self.tail
+        self.tail.prev = self.head
+
+    def get(self, key: int) -> int:
+        pass
+    def put(self, key: int, value: int) -> None:
+        pass
+
+    def _remove(self, node: Node) -> None:
+        p = node.prev
+        n = node.next
+        p.next = n
+        n.prev = p
+
+    def _append(self, node: Node) -> None:
+        p = self.tail.prev
+        p.next = node
+        self.tail.prev = node
+        node.next = self.tail
+        node.prev = p
