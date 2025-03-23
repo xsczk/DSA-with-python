@@ -55,16 +55,34 @@ class Node:
 class LRUCache_db_linked_list:
     def __init__(self, capacity: int):
         self.c = capacity
-        self.m = defaultdict(int)
+        self.m: dict[int, Node] = dict()
         self.head = Node(0, 0)
         self.tail = Node(0, 0)
         self.head.next = self.tail
         self.tail.prev = self.head
 
     def get(self, key: int) -> int:
-        pass
+        if key not in self.m: return -1
+        n = self.m[key]
+        # check if node is already at most recently used (mru) position,
+        # if satisfied, we don't need to remove and append
+        if n != self.tail.prev:
+            self._remove(n)
+            self._append(n)
+        return n.val
+
     def put(self, key: int, value: int) -> None:
-        pass
+        n = Node(k=key, v=value)
+        if key in self.m:
+            self._remove(self.m[key])
+        # if the number of keys exceeds the capacity,
+        # evict the least recently used node.
+        elif len(self.m) == self.c:
+            lru = self.head.next
+            self._remove(lru)
+            del self.m[lru.key]
+        self.m[key] = n
+        self._append(n)
 
     def _remove(self, node: Node) -> None:
         p = node.prev
@@ -78,3 +96,11 @@ class LRUCache_db_linked_list:
         self.tail.prev = node
         node.next = self.tail
         node.prev = p
+
+
+lru_cache = LRUCache_db_linked_list(2)
+lru_cache.put(1, 1)
+lru_cache.put(2, 2)
+lru_cache.get(1)
+lru_cache.put(3, 3)
+lru_cache.get(2)
