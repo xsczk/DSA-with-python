@@ -30,6 +30,8 @@ class Solution:
         before_removed_node.next = before_removed_node.next.next
         return head
 
+    # Time complexity: O(length)
+    # Space complexity: O(1)
     def remove_nth_node_from_end(self, head: Optional[ListNode], n: int) -> Optional[ListNode]:
         ans = ListNode()
         ans.next = head
