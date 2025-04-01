@@ -21,6 +21,8 @@ class Solution:
             if (backtrack(i - 1, j, k + 1) or backtrack(i + 1, j, k + 1) or
                     backtrack(i, j + 1, k + 1) or backtrack(i, j - 1, k + 1)):
                 return True
+            # mark as unvisited again if all the sequentially adjacent cells
+            # are not satisfied
             board[i][j] = char
             return False
 
