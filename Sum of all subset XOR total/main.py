@@ -12,7 +12,8 @@ by deleting some (possibly zero) elements of b.
 """
 
 
-
+# Time complexity: O(2^n)
+# Space complexity: O(n)
 class Solution:
     def subset_XOR_sum(self, nums: list[int]) -> int:
         def xor_sum(nums: list[int], index: int, current_xor: int) -> int:
