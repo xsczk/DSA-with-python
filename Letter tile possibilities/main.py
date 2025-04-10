@@ -10,16 +10,16 @@ class Solution:
         freq = Counter(tiles)
         count = [0]
 
-        def backtrack(i):
+        def backtrack():
             for k, v in freq.items():
                 if v != 0:
                     freq[k] -= 1
                     count[0] += 1
-                    backtrack(i+1)
+                    backtrack()
                     freq[k] += 1
             return count[0]
 
-        return backtrack(0)
+        return backtrack()
 
 solution = Solution()
 ans = solution.num_tile_possibilities('AAB')
