@@ -7,6 +7,7 @@ You must do this by modifying the input array in-place with O(1) extra memory.
 # Time complexity: O(n)
 # Space complexity: O(1)
 class Solution:
+    # Recursive approach
     def reverse_string(self, s: list[str]) -> None:
         """
         Do not return anything, modify s in-place instead.
