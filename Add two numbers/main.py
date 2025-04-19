@@ -16,6 +16,7 @@ class ListNode:
 
 
 class Solution:
+    # two pointers approach
     def add_two_numbers(self, l1: Optional[ListNode], l2: Optional[ListNode]) -> Optional[ListNode]:
         ans = ListNode()
         carry = 0
@@ -36,3 +37,22 @@ class Solution:
             p.next = ListNode(carry)
         return ans.next
 
+    # recursion
+    def add_two_numbers_2(self, l1: Optional[ListNode], l2: Optional[ListNode]) -> Optional[ListNode]:
+        # calc the number formed by linked list
+        # ex: 2 -> 4 -> 3: 342
+        def linkedlist_to_int(l: Optional[ListNode]):
+            if l.next is None: return l.val
+            return l.val + linkedlist_to_int(l.next) * 10
+
+        num1 = linkedlist_to_int(l1)
+        num2 = linkedlist_to_int(l2)
+
+        # convert int to linked list
+        # ex: 807: 7 -> 0 -> 8
+        def int_to_linkedlist(num: int) -> Optional[ListNode]:
+            if num < 10: return ListNode(val=num)
+            units = num % 10
+            return ListNode(val=units, next=int_to_linkedlist(num // 10))
+
+        return int_to_linkedlist(num1 + num2)
