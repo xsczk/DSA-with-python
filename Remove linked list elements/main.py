@@ -29,10 +29,3 @@ class Solution:
         # dummy.next is the new head
         return new_list.next
 
-    # recursive
-    def remove_elements_2(self, head: Optional[ListNode], val: int) -> Optional[ListNode]:
-        if head is None: return head
-        new_head = head
-        if head.val == val and head.next:
-            new_head = head.next
-        return ListNode(val=new_head.val, next=self.remove_elements_2(head=new_head.next, val=val))
