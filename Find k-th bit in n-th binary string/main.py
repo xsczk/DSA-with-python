@@ -42,6 +42,36 @@ class Solution:
             # recursively call with left half binary string
             return self.find_kth_bit_2(n - 1, k)
         # recursively call with right half binary string
-        # k = total - k + 1 means we find the bit at the position of the same left half binary string but it is inverted
+        # k = total - k + 1 means we find the bit at the position of the same left half binary string in inverted form
         inverted = self.find_kth_bit_2(n - 1, total - k + 1)
         return '1' if inverted == '0' else '0'
+
+    # iterative divide and conquer based on the recursion version
+    # Time complexity: O(n)
+    # Space complexity: O(1) since we do not need recursion
+    """
+        011100110110001      invert = False
+                  I
+        0111001              invert = True
+            I
+        011                  invert = False
+          I
+        0                    invert = True
+        I
+    """
+    def find_kth_bit_3(self, n: int, k: int) -> str:
+        invert = False
+        total = 2 ** n - 1
+        while k > 1:
+            # if k is in the middle, return based on invert variable
+            if k == total // 2 + 1:
+                return '1' if not invert else '0'
+            # if k is in the second half, invert and mirror
+            elif k > total // 2:
+                k = total - k + 1   # mirror position
+                invert = not invert # flip
+            # reduce length for next iteration
+            total //= 2
+        # for the first position, return based on invert variable
+        return '1' if invert else '0'
+
