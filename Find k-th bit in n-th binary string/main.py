@@ -27,3 +27,21 @@ class Solution:
             cur = ["1" if bit == "0" else "0" for bit in sequence[:-1]]
             sequence += ''.join(cur[::-1])
         return sequence[k - 1]
+
+    # recursion
+    # Time complexity: O(n) - we decrease n by 1 in each call until we reach the base case where n is 1
+    # Space complexity: O(n) - due to recursion stack
+    def find_kth_bit_2(self, n: int, k: int) -> str:
+        # base case: for S1
+        if n == 1: return '0'
+        total = 2 ** n - 1
+        # base case: if k is in exactly middle position
+        if k == (total // 2) + 1:
+            return '1'
+        elif k <= (total // 2):
+            # recursively call with left half binary string
+            return self.find_kth_bit_2(n - 1, k)
+        # recursively call with right half binary string
+        # k = total - k + 1 means we find the bit at the position of the same left half binary string but it is inverted
+        inverted = self.find_kth_bit_2(n - 1, total - k + 1)
+        return '1' if inverted == '0' else '0'
