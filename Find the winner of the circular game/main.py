@@ -25,12 +25,16 @@ class Solution:
     # Time complexity: O(n * k)
     # Space complexity: O(n)
     def find_the_winner(self, n: int, k: int) -> int:
+        # recalc step to reduce complexity
         step = k % n if k != n else k
         players = deque(range(1, n + 1))
         while len(players) > 1:
             for _ in range(step):
                 lose = players.popleft()
+                # append current player at each step,
+                # the last player is appended will be eliminated
                 players.append(lose)
+            # remove last player from queue after the loop above
             players.pop()
         return players[0]
 
@@ -64,7 +68,16 @@ class Solution:
         # add 1 to convert back to 1 indexing
         return find_winner(n, k) + 1
 
+    # iterative based on recursion's logic
+    # Time complexity: O(n)
+    # Space complexity: O(1)
+    def find_the_winner_3(self, n: int, k: int) -> int:
+        winner = 0
+        for i in range(2, n + 1):
+            winner = (winner + k) % i
+        # add 1 to convert back to 1 indexing
+        return winner + 1
 
 solution = Solution()
-winner = solution.find_the_winner_2(5, 2)
+winner = solution.find_the_winner_3(5, 2)
 print(winner)
