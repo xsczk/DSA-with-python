@@ -18,7 +18,7 @@ class Solution:
     # Space complexity: O(1)
     def remove_nodes(self, head: Optional[ListNode]) -> Optional[ListNode]:
         def reverse_linked_list(root: Optional[ListNode]) -> Optional[ListNode]:
-            """reverse the input linked list and return the revert list"""
+            """reverse the input linked list and return the reversed list"""
             prev, cur = None, root
             while cur is not None:
                 temp = cur.next
@@ -28,7 +28,7 @@ class Solution:
             return prev
 
         reversed_list = reverse_linked_list(head)
-        # traverse the revert list and append the current max node's value
+        # traverse the reversed list and append the current max node's value
         cur, prev = reversed_list, None
         max = float('-Inf')
         while cur:
