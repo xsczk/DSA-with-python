@@ -14,9 +14,36 @@ class ListNode:
 
 
 class Solution:
+    # using stack to keep track the maximum value
+    # Time complexity: O(n)
+    # Space complexity: O(n) due to stack size
+    def remove_nodes(self, head: Optional[ListNode]) -> Optional[ListNode]:
+        # 5 -> 2 -> 13 -> 3 -> 8
+        stack = []
+        cur = head
+        while cur is not None:
+            stack.append(cur)
+            cur = cur.next
+        # cur will now contain each node at reverse order
+        cur = stack.pop()
+        # initialize maximum value
+        maximum = cur.val
+        result_list = ListNode(maximum)
+        while stack:
+            cur = stack.pop()
+            if maximum <= cur.val:
+                # append current node to current result_list
+                cur.next = result_list
+                result_list = cur
+            maximum = max(maximum, cur.val)
+        return result_list
+
+
+
+    # reverse the linked list twice
     # Time complexity: O(n)
     # Space complexity: O(1)
-    def remove_nodes(self, head: Optional[ListNode]) -> Optional[ListNode]:
+    def remove_nodes_2(self, head: Optional[ListNode]) -> Optional[ListNode]:
         def reverse_linked_list(root: Optional[ListNode]) -> Optional[ListNode]:
             """reverse the input linked list and return the reversed list"""
             prev, cur = None, root
