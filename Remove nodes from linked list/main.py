@@ -69,3 +69,23 @@ class Solution:
             cur = cur.next
         new_head = reverse_linked_list(reversed_list)
         return new_head
+
+    # recursion
+    # Time complexity: O(n)
+    # Space complexity: O(n) due to recursion stack
+    def remove_nodes_3(self, head: Optional[ListNode]) -> Optional[ListNode]:
+        # base case: reached end of the list
+        if not head or not head.next: return head
+        # recursive call to head.next
+        next_node = self.remove_nodes_3(head.next)
+        # If the next node has greater value than head, delete the head
+        # Return next node, which removes the current head and
+        # makes next the new head
+        if head.val < next_node.val:
+            return next_node
+        # keep the head
+        head.next = next_node
+        return head
+
+
+
