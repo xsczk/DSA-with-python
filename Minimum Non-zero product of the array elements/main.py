@@ -28,7 +28,7 @@ class Solution:
     7 = 111        111          111
 
     => there will be 2^(p - 1) // 2 number 1 and number 2^(p - 1) - 1
-    min product of non-zero = (1 * 1 * 1 * ..). * (2^(p - 1) - 1 * 2^(p - 1) - 1) * ... * 2^(p - 1)
+    min product of non-zero = (1 * 1 * 1 * ...). * (2^(p - 1) - 1 * ... * 2^(p - 1) - 1) * 2^(p - 1)
     """
     # Time complexity: O(log n)
     # Space complexity: O(1)
