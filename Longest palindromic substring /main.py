@@ -30,7 +30,46 @@ class Solution:
                 start, end = l2, r2
         return s[start:end + 1]
 
+    # dynamic programing - refer https://www.geeksforgeeks.org/longest-palindromic-substring/
+    # Time complexity: O(n^2)
+    # Space complexity: O(n^2)
+    def longest_palindrome_dp(self, s: str) -> str:
+        n = len(s)
+        # create dp table to store status of substring from i -> j if s[i...j]
+        # is a palindrome or not
+        dp = [[False] * n for _ in range(n)]
+        # keep track the starting index and the current palindrome's max len
+        start, max_len = 0, 1
+
+        # all substrings of length 1 are palindromes
+        for i in range(n):
+            dp[i][i] = True
+
+        # all substrings of length 2 with same characters are also palindrome
+        for i in range(n - 1):
+            if s[i] == s[i + 1]:
+                dp[i][i + 1] = True
+                # update the max_len if it smaller than 2
+                if max_len < 2:
+                    start = i
+                    max_len = 2
+
+        # check for lengths of the palindrome from 3 -> n
+        for length in range(3, n + 1):
+            for i in range(0, n - length + 1):
+                # last index of current substring has len `length`
+                j = i + length - 1
+                # if the substring from i + 1 -> j - 1 is a palindrome and s[i] == s[j]
+                # => the substring from i -> j is also a palindrome
+                if dp[i + 1][j - 1] and s[i] == s[j]:
+                    dp[i][j] = True
+                    # update the max_len
+                    if length > max_len:
+                        max_len = length
+                        start = i
+        return s[start:start + max_len]
+
 
 solution = Solution()
-palindrome = solution.longest_palindrome("babaddtattarrattatddetartrateedredividerb")
+palindrome = solution.longest_palindrome_dp("babaddtattarrattatddetartrateedredividerb")
 print(palindrome)
