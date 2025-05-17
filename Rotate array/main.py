@@ -5,7 +5,7 @@ where k is non-negative."""
 class Solution:
     # using additional space
     # Time complexity: O(n)
-    # Space complexity: O(1)
+    # Space complexity: O(n)
     def rotate(self, nums: list[int], k: int) -> None:
         """
         Do not return anything, modify nums in-place instead.
