@@ -16,6 +16,19 @@ class Solution:
             arr[i] = 0
         return arr
 
+    # two pointers, swap elements
+    # Time complexity: O(n) - each element is visited once
+    # Space complexity: O(1)
+    def move_zeroes_2(self, arr: list[int]) -> list[int]:
+        p = 0
+        for i in range(len(arr)):
+            if arr[i] != 0:
+                temp = arr[p]
+                arr[p] = arr[i]
+                arr[i] = temp
+                p += 1
+        return arr
+
 solution = Solution()
-result = solution.move_zeroes([0, 1, 2, 0, 12, 0, 3, 10, 0, 0, 25, 40, 0, 35])
+result = solution.move_zeroes_2([0, 1, 2, 0, 12, 0, 3, 10, 0, 0, 25, 40, 0, 35])
 print(result)
