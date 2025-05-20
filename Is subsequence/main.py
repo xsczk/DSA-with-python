@@ -30,15 +30,19 @@ class Solution:
 
 # dynamic programing with binary search
 class SubsequenceChecker:
-    def is_subsequence(self, s: str, t: str) -> bool:
-        char_indices = defaultdict(list)
+    # Time complexity: O(len(t)) at init call
+    def __init__(self, t: str):
+        self.char_indices = defaultdict(list)
         for i, char in enumerate(t):
-            char_indices[char].append(i)
+            self.char_indices[char].append(i)
+
+    # Time complexity: O(len(s) * log(len(t)) at worst case
+    def is_subsequence(self, s: str) -> bool:
         pos = -1
         for c in s:
-            if c not in char_indices:
+            if c not in self.char_indices:
                 return False
-            idx_ls = char_indices[c]
+            idx_ls = self.char_indices[c]
             # find the first index in idx_ls such that index > pos
             i = self.binary_search(current_position=pos, indices_list=idx_ls)
             if i == len(idx_ls):
@@ -62,6 +66,6 @@ class SubsequenceChecker:
         return l
 
 
-checker = SubsequenceChecker()
-ans = checker.is_subsequence('ahj', 'bcgkeheajk')
+checker = SubsequenceChecker('bcgkeheajk')
+ans = checker.is_subsequence('ahj')
 print(ans)
