@@ -19,7 +19,8 @@ Return true if there is a cycle in nums, or false otherwise."""
 
 class Solution:
     # Floyd's Cycle detection
-    # Time complexity:
+    # Time complexity: O(n)
+    # Space complexity: O(1)
     def circular_array_loop(self, nums: list[int]) -> bool:
         n = len(nums)
 
