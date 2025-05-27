@@ -20,7 +20,7 @@ class Solution:
         return ' '.join(reversed_words)
 
     # Time complexity: O(n)
-    # Space complexity: O(n)
+    # Space complexity: O(n) due to result list
     def reverse_words_2(self, s: str) -> str:
         last_space_index = -1
         result = []
@@ -37,3 +37,23 @@ class Solution:
                 # of the next word will be last_space_index + 1 for the next iteration
                 last_space_index = str_index
         return ''.join(result)
+
+    # Two pointers based on approach above
+    # Time complexity: O(n)
+    # Space complexity: O(n) due to converting s to a list
+    def reverse_words_3(self, s: str) -> str:
+        last_space_index = -1
+        s = list(s)
+        for str_index in range(len(s)):
+            # if we are currently at the last of the s or current character is a space
+            if s[str_index] == ' ' or str_index == len(s) - 1:
+                first_character = last_space_index + 1
+                last_character = str_index - 1 if s[str_index] == ' ' else str_index
+                # swap first and last character
+                while last_character > first_character:
+                    s[first_character], s[last_character] = s[last_character], s[first_character]
+                    first_character += 1
+                    last_character -= 1
+                # remember last_space_index for next iteration
+                last_space_index = str_index
+        return ''.join(s)
