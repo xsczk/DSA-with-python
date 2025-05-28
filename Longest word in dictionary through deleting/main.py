@@ -36,4 +36,3 @@ class Solution:
                 ):
                     longest = word
         return longest
-
