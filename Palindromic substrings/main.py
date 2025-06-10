@@ -35,3 +35,27 @@ class Solution:
                     dp[start][end] = True
                     ans += 1
         return ans
+
+    # two pointers, expand from the beginning
+    # time complexity: O(n^2)
+    # space complexity: O(1)
+    def count_substrings_2(self, s: str) -> int:
+        ans = 0
+        if not s:
+            return ans
+
+        def expand(i: int, j: int) -> int:
+            num_of_substr = 0
+            l, r = i, j
+            while l >= 0 and r < len(s) and s[l] == s[r]:
+                num_of_substr += 1
+                l -= 1
+                r += 1
+            # return the total of palindromic substrings
+            # can be formed with initial index i, j
+            return num_of_substr
+
+        for i in range(len(s)):
+            # expand from substring that have odd length plus even length cases
+            ans += expand(i, i) + expand(i, i + 1)
+        return ans
