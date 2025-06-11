@@ -37,4 +37,27 @@ function countSubstrings(s: string): number {
    return ans
 }
 
+// two pointers, expand to determine if the next substring is a palindrome
+// time complexity: O(n^2)
+// space complexity: O(1)
+function countSubstrings2(s: string): number {
+   let ans = 0
+   if (!s) return ans
+
+   function expand(i: number, j: number): number {
+      let l = i, r = j, numOfPalindrome = 0
+      while (l >= 0 && r < s.length && s[l] == s[r]) {
+         l--
+         r++
+         numOfPalindrome += 1
+      }
+      return numOfPalindrome
+   }
+
+   for (let i = 0; i < s.length; i++) {
+      ans += expand(i, i) + expand(i, i + 1)
+   }
+   return ans
+}
+
 countSubstrings('abc')
