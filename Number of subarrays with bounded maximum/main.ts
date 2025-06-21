@@ -29,4 +29,24 @@ function numSubarrayBoundedMax(nums: number[], left: number,
    }
 
    return numSubarray(right) - numSubarray(left - 1)
-};
+}
+
+// expand the valid window
+// time complexity: O(n)
+// space complexity: O(1)
+function numSubarrayBoundedMax2(nums: number[], left: number,
+                                right: number): number {
+   let x = -1, y = -1, ans = 0
+   for (let i = 0; i < nums.length; i++) {
+      const num = nums[i]
+      // expand the valid subarray
+      if (num >= left) y = i
+      // reset and start new window subarray as num is not in valid boundary
+      if (num > right) x = i
+      // with each loop, re-calculate ans
+      ans += y - x
+   }
+   return ans
+}
+
+numSubarrayBoundedMax2([2, 1, 4, 3], 2, 3)

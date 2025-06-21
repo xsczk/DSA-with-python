@@ -34,3 +34,19 @@ class Solution:
         # the ans will be the number of subarray can be formed if all elements less than right
         # minus the number of subarray with all less than left - 1
         return num_subarray(right) - num_subarray(left - 1)
+
+    # expand the valid window
+    # time complexity: O(n)
+    # space complexity: O(1)
+    def num_subarray_bounded_max2(self, nums: List[int], left: int,
+                                  right: int) -> int:
+        x, y, ans = -1, -1, 0
+        for i, num in enumerate(nums):
+            if num >= left:
+                # expand the valid subarray
+                y = i
+            if num > right:
+                # reset and start new window subarray as num is not in valid boundary
+                x = i
+            ans += y - x
+        return ans
