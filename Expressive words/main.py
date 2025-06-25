@@ -25,6 +25,8 @@ Constraints:
 - 1 <= words[i].length <= 100
 - s and words[i] consist of lowercase letters.
 """
+import itertools
+from typing import Iterator
 
 
 class Solution:
@@ -70,6 +72,21 @@ class Solution:
                 ans += 1
         return ans
 
+    # concise version based on the logic of above approach using groupby and zip
+    def expressive_words_2(self, s: str, words: list[str]) -> int:
+        def RLE(S: str) -> Iterator[tuple[str, int]]:
+            return zip(*[(c, len(list(g))) for c, g in itertools.groupby(S)])
+
+        R, count = RLE(s)
+        ans = 0
+        for word in words:
+            R2, count2 = RLE(word)
+            if R2 != R:
+                continue
+            ans += all(
+                [c >= max(c2, 3) or c == c2 for c, c2 in zip(count, count2)])
+        return ans
+
 
 solution = Solution()
-print(solution.expressive_words(s="heeellooo", words=["hello", "hi", "helo"]))
+print(solution.expressive_words_2(s="heeellooo", words=["hello", "hi", "helo"]))
