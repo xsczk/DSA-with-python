@@ -10,6 +10,7 @@ Constraints:
 - s[i] and c are lowercase English letters.
 - It is guaranteed that c occurs at least once in s.
 """
+from collections import deque
 
 
 class Solution:
@@ -30,4 +31,21 @@ class Solution:
             if s[i] == c:
                 prev = i
             ans[i] = min(prev - i, ans[i])
+        return ans
+
+    # update the ans[i] one by one
+    # time complexity: O(n)
+    # space complexity: O(n)
+    def shortest_to_char_2(self, s: str, c: str) -> list[int]:
+        ans = [0] * len(s)
+        c_indices = deque([])
+        for i, char in enumerate(s):
+            if char == c:
+                c_indices.append(i)
+        prev_i = float('inf')
+        for i, char in enumerate(s):
+            ans[i] = min(abs(prev_i - i), abs(c_indices[0] - i))
+            # update the previous index of c in the s
+            if char == c and len(c_indices) > 1:
+                prev_i = c_indices.popleft()
         return ans

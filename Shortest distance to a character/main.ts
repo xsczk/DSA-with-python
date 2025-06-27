@@ -31,4 +31,23 @@ function shortestToChar(s: string, c: string): number[] {
       ans[i] = Math.min(ans[i], prev - i)
    })
    return ans
-};
+}
+
+// update the ans[i] one by one
+// time complexity: O(n)
+// space complexity: O(n)
+function shortestToChar2(s: string, c: string): number[] {
+   const ans = Array.from({length: s.length}, () => 0)
+   const cIndexes = [], arr = s.split('')
+   arr.forEach((char, i) => {
+      if (char == c) cIndexes.push(i)
+   })
+   let prevIndex = Infinity
+   arr.forEach((char, i) => {
+      ans[i] = Math.min(Math.abs(prevIndex - i), Math.abs(cIndexes[0] - i))
+      if (cIndexes.length > 1 && c == char) {
+         prevIndex = cIndexes.shift()
+      }
+   })
+   return ans
+}
