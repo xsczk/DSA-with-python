@@ -65,4 +65,23 @@ function numFriendRequests(ages: number[]): number {
    return ans
 }
 
-console.log(numFriendRequests([20, 30, 30, 100, 100, 110, 110, 110, 120]))
+function numFriendRequests2(ages: number[]): number {
+   const count = Array.from({length: 121}, () => 0)
+   const prefix = [...count]
+   for (const age of ages) {
+      count[age] += 1
+   }
+   for (let i = 1; i < 121; i++) {
+      prefix[i] = prefix[i - 1] + count[i]
+   }
+   let ans = 0
+   for (let age = 15; age < 121; age++) {
+      if (!count[age]) continue
+      const minAge = Math.floor(age * 0.5 + 7)
+      const valid = prefix[age] - prefix[minAge]
+      ans += count[age] * (valid - 1)
+   }
+   return ans
+}
+
+console.log(numFriendRequests2([20, 30, 30, 100, 100, 110, 110, 110, 120]))
