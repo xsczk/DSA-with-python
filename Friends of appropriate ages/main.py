@@ -65,3 +65,34 @@ class Solution:
             ans += valid_requests
             requests_age[age] = valid_requests
         return ans
+
+    # count the prefix for fast calculating
+    # time complexity: O(n) - no sorting, no binary searching
+    # space complexity: O(1)
+    def numFriendRequests2(self, ages: list[int]) -> int:
+        # from the constraints, age is from 1 to 120
+        count = [0] * 121
+        prefix = [0] * 121
+        # count the number of people for each age
+        for age in ages:
+            count[age] += 1
+        for i in range(1, 121):
+            # prefix[i] is the number of people whose age is less or equal than i
+            prefix[i] = prefix[i - 1] + count[i]
+        ans = 0
+        # number of valid friend requests of specific age is from min_age to the others at the same age
+        for age in range(15, 121):
+            if count[age] == 0:
+                continue
+            min_age = int(age * 0.5 + 7)
+            # prefix[age]: number of people whose age is less than `age`
+            # prefix[min_age]: number of people whose age is less than `min_age`
+            # => prefix[age] - prefix[min_age] is from min_age + 1 to age (inclusive)
+            valid = prefix[age] - prefix[min_age]
+            # subtract 1 since a person cannot send a request to themselves
+            ans += count[age] * (valid - 1)
+        return ans
+
+
+solution = Solution()
+print(solution.numFriendRequests2([20, 30, 30, 100, 100, 110, 110, 110, 120]))
