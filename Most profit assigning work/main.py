@@ -53,5 +53,6 @@ class Solution:
 
 solution = Solution()
 print(
-    solution.max_profit_assignment(difficulty=[85, 47, 57], profit=[24, 66, 99],
-                                   worker=[40, 25, 25]))
+    solution.max_profit_assignment(difficulty=[68, 35, 52, 47, 86],
+                                   profit=[67, 17, 1, 81, 3],
+                                   worker=[92, 10, 85, 84, 82]))
