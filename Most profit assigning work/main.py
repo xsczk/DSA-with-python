@@ -81,9 +81,31 @@ class Solution:
             net_profit += max_profit
         return net_profit
 
+    # two pointers, greedy
+    # time complexity: O(n.(logn + 1) + m.(logm + 1))
+    # where n.logn is complexity for sorting job_profile,
+    # m.logm for sorting worker, m + n for looping through worker
+    def max_profit_assignment_3(self, difficulty: list[int], profit: list[int],
+                                worker: list[int]) -> int:
+        n = len(difficulty)
+        job_profile = [(difficulty[i], profit[i]) for i in range(n)]
+        job_profile.sort(key=lambda x: x[0])
+        worker.sort()
+        max_profit, net_profit, j = 0, 0, 0
+        for ability in worker:
+            # while the j has not reached the end and worker can pick a job
+            # with greater difficulty move ahead.
+            while j < n and job_profile[j][0] <= ability:
+                max_profit = max(max_profit, job_profile[j][1])
+                j += 1
+            net_profit += max_profit
+        return net_profit
+
+
+
 
 solution = Solution()
 print(
-    solution.max_profit_assignment_2(difficulty=[68, 35, 52, 47, 86],
+    solution.max_profit_assignment_3(difficulty=[68, 35, 52, 47, 86],
                                      profit=[67, 17, 1, 81, 3],
                                      worker=[92, 10, 85, 84, 82]))
