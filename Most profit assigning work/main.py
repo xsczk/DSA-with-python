@@ -50,9 +50,40 @@ class Solution:
             net_profit += max_profit
         return net_profit
 
+    # binary search, sort by profit
+    # time complexity: O(n.logn + m.logn) where n.logn is complexity for sorting job_profile;
+    # m.logn for binary search inside worker list loop
+    def max_profit_assignment_2(self, difficulty: list[int], profit: list[int],
+                                worker: list[int]) -> int:
+        job_profile = [(0, 0)]
+        n = len(difficulty)
+        for i in range(n):
+            job_profile.append((difficulty[i], profit[i]))
+        # sort the job_profile based on profit
+        job_profile.sort(key=lambda x: x[1], reverse=True)
+        m = len(job_profile) - 1
+        # worker will choose the job with maximum profit they can handle
+        for i in range(m):
+            job_profile[i + 1] = (
+                min(job_profile[i + 1][0], job_profile[i][0]),
+                job_profile[i + 1][1],
+            )
+        net_profit = 0
+        for ability in worker:
+            l, r, max_profit = 0, m, 0
+            while l <= r:
+                mid = (l + r) // 2
+                if job_profile[mid][0] <= ability:
+                    max_profit = job_profile[mid][1]
+                    r = mid - 1
+                else:
+                    l = mid + 1
+            net_profit += max_profit
+        return net_profit
+
 
 solution = Solution()
 print(
-    solution.max_profit_assignment(difficulty=[68, 35, 52, 47, 86],
-                                   profit=[67, 17, 1, 81, 3],
-                                   worker=[92, 10, 85, 84, 82]))
+    solution.max_profit_assignment_2(difficulty=[68, 35, 52, 47, 86],
+                                     profit=[67, 17, 1, 81, 3],
+                                     worker=[92, 10, 85, 84, 82]))
