@@ -56,6 +56,25 @@ function maxProfitAssignment(difficulty: number[], profit: number[],
    return netProfit
 }
 
-console.log(maxProfitAssignment([68, 35, 52, 47, 86], [67, 17, 1, 81, 3], [
+// two pointers, greedy
+function maxProfitAssignment3(...params: Parameters<typeof maxProfitAssignment>): number {
+   const [difficulty, profit, worker] = params
+   const jobProfile = difficulty.map((v, i) => {
+      return [v, profit[i]]
+   })
+   jobProfile.sort((a, b) => a[0] - b[0])
+   worker.sort((a, b) => a - b)
+   let maxProfit = 0, netProfit = 0, j = 0
+   for (const ability of worker) {
+      while (j < difficulty.length && ability >= jobProfile[j][0]) {
+         maxProfit = Math.max(maxProfit, jobProfile[j][1])
+         j += 1
+      }
+      netProfit += maxProfit
+   }
+   return netProfit
+}
+
+console.log(maxProfitAssignment3([68, 35, 52, 47, 86], [67, 17, 1, 81, 3], [
    92, 10, 85, 84, 82
 ]))
