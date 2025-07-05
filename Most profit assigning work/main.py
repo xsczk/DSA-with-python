@@ -101,11 +101,32 @@ class Solution:
             net_profit += max_profit
         return net_profit
 
-
+    # memoization
+    # time complexity: O(n + m + max_ability) where n is len of difficulty,
+    # m is the len of worker
+    # NOTE: this approach is not really efficient if max ability of a worker is large
+    def max_profit_assignment_4(self, difficulty: list[int], profit: list[int],
+                                worker: list[int]) -> int:
+        max_ability = max(worker)
+        # abilities is a list which is store the max profit as element at its difficulty indices
+        abilities = [0] * (max_ability + 1)
+        for i, v in enumerate(difficulty):
+            # if multiple jobs have the same difficulty, store the maximum profit among them
+            if v <= max_ability:
+                abilities[v] = max(profit[i], abilities[v])
+        for i in range(1, len(abilities)):
+            # store the maximum of current and previous abilities values in the current abilities index.
+            abilities[i] = max(abilities[i], abilities[i - 1])
+        # since abilities store max profit for each ability =>
+        # the result will be the sum of all elements at ability index
+        net_profit = 0
+        for ability in worker:
+            net_profit += abilities[ability]
+        return net_profit
 
 
 solution = Solution()
 print(
-    solution.max_profit_assignment_3(difficulty=[68, 35, 52, 47, 86],
+    solution.max_profit_assignment_4(difficulty=[68, 35, 52, 47, 86],
                                      profit=[67, 17, 1, 81, 3],
                                      worker=[92, 10, 85, 84, 82]))

@@ -75,6 +75,26 @@ function maxProfitAssignment3(...params: Parameters<typeof maxProfitAssignment>)
    return netProfit
 }
 
+// memoization, this approach is built based on the memoization approach in python
+function maxProfitAssignment4(...params: Parameters<typeof maxProfitAssignment>): number {
+   const [difficulty, profit, worker] = params
+   const maxAbility = Math.max(...worker)
+   const abilities = Array.from({length: maxAbility + 1}).map(() => 0)
+   difficulty.forEach((v, i) => {
+      if (v <= maxAbility) {
+         abilities[v] = Math.max(abilities[v], profit[i])
+      }
+   })
+   for (let i = 1; i < abilities.length; i++) {
+      abilities[i] = Math.max(abilities[i], abilities[i - 1])
+   }
+   let netProfit = 0
+   for (const ability of worker) {
+      netProfit += abilities[ability]
+   }
+   return netProfit
+}
+
 console.log(maxProfitAssignment3([68, 35, 52, 47, 86], [67, 17, 1, 81, 3], [
    92, 10, 85, 84, 82
 ]))
