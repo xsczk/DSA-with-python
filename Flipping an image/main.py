@@ -33,7 +33,8 @@ class Solution:
         return image
 
     # flipping an image using XOR operator
-    def flip_and_invert_image_2(self, image: list[list[int]]) -> list[list[int]]:
+    def flip_and_invert_image_2(self, image: list[list[int]]) -> list[
+        list[int]]:
         for row in image:
             i, j = 0, len(row) - 1
             while i <= j:
@@ -46,3 +47,17 @@ class Solution:
                 i += 1
                 j -= 1
         return image
+
+    # using for loop instead of while loop
+    def flip_and_invert_image_3(self, image: list[list[int]]) -> list[
+        list[int]]:
+        for row in image:
+            for i in range((len(row) + 1) // 2):
+                # in python, ~i is equivalent to -i - 1 or len(row) - i - 1
+                row[i], row[~i] = row[~i] ^ 1, row[i] ^ 1
+        return image
+
+
+solution = Solution()
+print(solution.flip_and_invert_image_3(
+    [[1, 1, 0, 0], [1, 0, 0, 1], [0, 1, 1, 1], [1, 0, 1, 0]]))
