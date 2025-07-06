@@ -51,6 +51,25 @@ class Solution:
             # L...R: we do not need to do anything further since (*) is satisfied
         return ''.join(ans)
 
+    # concise version
+    def push_dominoes_2(self, dominoes: str) -> str:
+        symbols = [(i, x) for i, x in enumerate(dominoes) if x != '.']
+        # handle the edge cases. ex: R...
+        symbols = [(-1, 'L')] + symbols + [(len(dominoes), 'R')]
+        ans = list(dominoes)
+        for (i, x), (j, y) in zip(symbols, symbols[1:]):
+            if x == y:
+                for k in range(i + 1, j):
+                    ans[k] = x
+            # x = R and y = L
+            elif x > y:
+                l, r = i + 1, j - 1
+                while l < r:
+                    ans[l] = x
+                    ans[r] = y
+                    l, r = l + 1, r - 1
+        return ''.join(ans)
+
 
 solution = Solution()
-print(solution.push_dominoes(".L.R...LR..L.."))
+print(solution.push_dominoes_2(".L.R...LR..L.."))
