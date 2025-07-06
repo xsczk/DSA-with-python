@@ -30,7 +30,7 @@
 function pushDominoes(dominoes: string): string {
    const n = dominoes.length
    const ans = dominoes.split('')
-   let symbols: [number, string][] = dominoes.split('').map((c, i) => {
+   let symbols: [number, string][] = ans.map((c, i) => {
       if (c != '.') {
          return [i, c]
       }
