@@ -42,11 +42,10 @@ class Solution:
 
         # append remaining to the end of assigned as remaining is useless for the answer
         assigned = assigned + remaining
-        combined = zip(assigned, sorted_nums2)
-        res = list(combined)
-        # restruct the element in nums1 based on nums2
-        res.sort(key=lambda x: x[1][0])
-        return [x[0][1] for x in res]
+        combined = list(zip(assigned, sorted_nums2))
+        # reconstruct the element in nums1 based on the original order of nums2
+        combined.sort(key=lambda x: x[1][0])
+        return [x[0][1] for x in combined]
 
 
 solution = Solution()
