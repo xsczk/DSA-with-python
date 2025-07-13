@@ -13,6 +13,9 @@ Constraints:
 
 
 class Solution:
+    # greedy, two pointers, sorting
+    # time complexity: O(n * log n)
+    # space complexity: O(n)
     def advantage_count(self, nums1: list[int], nums2: list[int]) -> list[int]:
 
         def sorted_with_indices(nums: list[int]):
@@ -47,6 +50,32 @@ class Solution:
         combined.sort(key=lambda x: x[1][0])
         return [x[0][1] for x in combined]
 
+    # greedy, two pointers, hash table, sorting
+    # time complexity: O(n * log n)
+    # space complexity: O(n)
+    def advantage_count_2(self, nums1: list[int], nums2: list[int]) -> list[
+        int]:
+        sorted_nums1 = sorted(nums1)
+        sorted_nums2 = sorted(nums2)
+
+        # assigned[b] = list of a that are assigned to beat b
+        # remaining = list of a that are not assigned to any b
+        assigned = {b: [] for b in nums2}
+        remaining = []
+
+        # populate (assigned, remaining) appropriately
+        # sorted_nums2[j] is always the smallest unassigned element in nums2
+        j = 0
+        for a in sorted_nums1:
+            if a > sorted_nums2[j]:
+                assigned[sorted_nums2[j]].append(a)
+                j += 1
+            else:
+                remaining.append(a)
+        # reconstruct the answer from annotations (assigned, remaining)
+        return [assigned[b].pop() if assigned[b] else remaining.pop() for b in nums2]
+
+
 
 solution = Solution()
-print(solution.advantage_count(nums1=[12, 24, 8, 32], nums2=[13, 25, 32, 11]))
+print(solution.advantage_count_2(nums1=[12, 24, 8, 32], nums2=[13, 25, 32, 11]))
