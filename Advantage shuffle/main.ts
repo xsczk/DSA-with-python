@@ -10,6 +10,7 @@
  * - nums2.length == nums1.length
  * - 0 <= nums1[i], nums2[i] <= 10^9
  */
+import {isEmpty} from 'lodash'
 
 // greedy, use original position of nums2 to maintain the order of the answer
 function advantageCount(nums1: number[], nums2: number[]): number[] {
@@ -55,8 +56,8 @@ function advantageCount2(nums1: number[], nums2: number[]): number[] {
          remaining.push(num)
       }
    }
-   return nums2.map(v => !_.isEmpty(assigned[v]) ? assigned[v].pop() : remaining.pop())
+   return nums2.map(v => !isEmpty(assigned[v]) ? assigned[v].pop() : remaining.pop())
 }
 
 // expected answer: [24, 32, 8, 12]
-console.log(advantageCount([12, 24, 8, 32], [13, 25, 32, 11]))
+console.log(advantageCount2([12, 24, 8, 32], [13, 25, 32, 11]))
