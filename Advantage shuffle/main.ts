@@ -36,5 +36,27 @@ function advantageCount(nums1: number[], nums2: number[]): number[] {
    return res
 }
 
+// using hashtable
+function advantageCount2(nums1: number[], nums2: number[]): number[] {
+   const n = nums1.length
+   nums1.sort((a, b) => a - b)
+   const sortedNums2 = [...nums2].sort((a, b) => a - b)
+   const assigned = nums2.reduce((acc, value) => {
+      acc[value] = []
+      return acc
+   }, {})
+   const remaining = []
+   let j = 0
+   for (const num of nums1) {
+      if (num > sortedNums2[j]) {
+         assigned[sortedNums2[j]].push(num)
+         j++
+      } else {
+         remaining.push(num)
+      }
+   }
+   return nums2.map(v => !_.isEmpty(assigned[v]) ? assigned[v].pop() : remaining.pop())
+}
+
 // expected answer: [24, 32, 8, 12]
 console.log(advantageCount([12, 24, 8, 32], [13, 25, 32, 11]))
