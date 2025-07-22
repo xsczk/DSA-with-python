@@ -9,6 +9,7 @@ Constraints:
 - 1 <= name.length, typed.length <= 1000
 - name and typed consist of only lowercase English letters.
 """
+from itertools import groupby
 
 
 class Solution:
@@ -41,3 +42,19 @@ class Solution:
                 return False
             tp += 1
         return True
+
+    # concise version using groupby and zip
+    def is_long_pressed_name_2(self, name: str, typed: str) -> bool:
+        def groupByChar(s: str) -> list[tuple[str, int]]:
+            """
+            group each character with the number of times it appears.
+            """
+            return [(c, len(list(gr))) for c, gr in groupby(s)]
+
+        name_group = groupByChar(name)
+        typed_group = groupByChar(typed)
+
+        if len(name_group) != len(typed_group):
+            return False
+        return all([k1 == k2 and v1 <= v2 for (k1, v1), (k2, v2) in
+                    zip(name_group, typed_group)])
