@@ -37,3 +37,18 @@ class Solution:
                 ):
                     return False
         return not len(stack)
+
+    # stack, hash table
+    def is_valid_2(self, s: str) -> bool:
+        stack = []
+        group = {"(": ")", "{": "}", "[": "]"}
+        for bracket in s:
+            if bracket in group:
+                stack.append(bracket)
+            else:
+                if not stack:
+                    return False
+                open = stack.pop()
+                if bracket != group[open]:
+                    return False
+        return not len(stack)
