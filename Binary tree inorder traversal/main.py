@@ -5,6 +5,7 @@ Constraints:
 - The number of nodes in the tree is in the range [0, 100].
 - -100 <= Node.val <= 100
 """
+from inspect import stack
 from typing import Optional
 
 
@@ -32,4 +33,23 @@ class Solution:
     def inorder_traversal(self, root: Optional[TreeNode]) -> list[int]:
         res = []
         self.helper(root, res)
+        return res
+
+    # using stack based on the logic of recursive approach
+    # time complexity: O(n)
+    # space complexity: O(n)
+    def inorder_traversal_stack(self, root: Optional[TreeNode]) -> list[int]:
+        res = []
+        stack = []
+        curr = root
+        while curr or stack:
+            # traverse all the left subtree nodes
+            while curr:
+                stack.append(curr)
+                curr = curr.left
+            # if not any left nodes found, push the recent node's value to res
+            curr = stack.pop()
+            res.append(curr.val)
+            # start traversing right subtree nodes
+            curr = curr.right
         return res
