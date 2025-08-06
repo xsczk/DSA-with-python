@@ -30,6 +30,9 @@ class TreeNode:
 
 
 class Solution:
+    def __init__(self):
+        self.head = None
+
     def pre_order_traversal(self, node: Optional[TreeNode],
                             stack: list[Optional[TreeNode]]) -> None:
         if node is not None:
@@ -53,3 +56,23 @@ class Solution:
             head.left = None
             # right child pointer points to the next node in the list
             head.right = None if len(stack) - 1 < 0 else stack[-1]
+
+    # recursion
+    # time complexity: O(n)
+    # space complexity: O(1)
+    def pre_order_helper(self, node: Optional[TreeNode]) -> None:
+        if node is not None:
+            self.pre_order_helper(node.right)
+            self.pre_order_helper(node.left)
+            # left child pointer is always null
+            node.left = None
+            # current right child will be the head
+            # which is assigned to the node of the next recur function in the callstack
+            node.right = self.head
+            self.head = node
+
+    def flatten_2(self, root: Optional[TreeNode]) -> None:
+        """
+        Do not return anything, modify root in-place instead.
+        """
+        self.pre_order_helper(root)
