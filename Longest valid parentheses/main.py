@@ -32,3 +32,21 @@ class Solution:
                 stack = []
                 last_invalid = i
         return max_len
+
+    # concise version base on the above logic
+    def longest_valid_parentheses2(self, s: str) -> int:
+        max_len = 0
+        # initialize stack with -1 as a base for valid substring
+        stack = [-1]
+        for i, c in enumerate(s):
+            if c == '(':
+                stack.append(i)
+            else:
+                stack.pop()
+                # if stack is not empty, calc the valid substring length
+                if stack:
+                    max_len = max(max_len, i - stack[-1])
+                else:
+                    # if stack is empty, push the cur index as new base
+                    stack.append(i)
+        return max_len
