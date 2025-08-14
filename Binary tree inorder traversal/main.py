@@ -52,3 +52,23 @@ class Solution:
             # start traversing right subtree nodes
             curr = curr.right
         return res
+
+    # simulate the recursion approach by using stack
+    def inorder_traversal_stack2(self, root: Optional[TreeNode]) -> list[int]:
+        res: list[int] = []
+        if not root:
+            return res
+        stack: list[tuple[Optional[TreeNode], bool]] = [(root, False)]
+        while stack:
+            # treat the node as a parameter of the recursion function
+            node, visited = stack.pop()
+            if not node:
+                continue
+            if visited:
+                res.append(node.val)
+            else:
+                # inorder: left -> node -> right
+                stack.append((node.right, False))
+                stack.append((node, True))
+                stack.append((node.left, False))
+        return res
