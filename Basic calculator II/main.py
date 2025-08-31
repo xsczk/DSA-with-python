@@ -33,7 +33,7 @@ class Solution:
             if c == ' ':
                 continue
             if c.isdigit():
-                current_num = current_num * 10 + int(c)
+                current_num = current_num * 10 + (ord(c) - ord('0'))
             if not c.isdigit() or i == len(s) - 1:
                 # the expression is evaluated based on the precedence of the next operation
                 # if the current operation is + or - => push to the stack
