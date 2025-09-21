@@ -29,8 +29,6 @@ Constraints:
 - 1 <= nestedList.length <= 500
 - The values of the integers in the nested list is in the range [-106, 106].
 """
-from inspect import stack
-
 
 # This is the interface that allows for creating nested lists.
 # You should not implement it, or speculate about its implementation
