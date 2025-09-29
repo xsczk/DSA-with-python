@@ -45,32 +45,21 @@ class Solution:
 
         st1 = add_to_stack(l1)
         st2 = add_to_stack(l2)
-        carry, sum_st = 0, []
-
-        def calc_carry(digit_sum: int) -> int:
-            return 1 if digit_sum >= 10 else 0
-
-        while st1 and st2:
-            most_left_digit1 = st1.pop()
-            most_left_digit2 = st2.pop()
-            digit_sum = most_left_digit1 + most_left_digit2 + carry
-            sum_st.append(digit_sum % 10)
-            carry = calc_carry(digit_sum)
-        while st1:
-            digit = st1.pop()
-            digit_sum = digit + carry
-            sum_st.append(digit_sum % 10)
-            carry = calc_carry(digit_sum)
-        while st2:
-            digit = st2.pop()
-            digit_sum = digit + carry
-            sum_st.append(digit_sum % 10)
-            carry = calc_carry(digit_sum)
-        if carry:
-            sum_st.append(carry)
+        total, carry = 0, 0
         res = ListNode()
-        dummy = res
-        while sum_st:
-            dummy.next = ListNode(sum_st.pop())
-            dummy = dummy.next
-        return res.next
+
+        while st1 or st2:
+            if st1:
+                total += st1.pop()
+            if st2:
+                total += st2.pop()
+            res.val = total % 10
+            # if total of two digits >= 10 => carry = 1; 0 otherwise
+            carry = total // 10
+            # save the carry; in 99 + 1 = 100, the carry produces the new leading digit 1.
+            head = ListNode(carry)
+            head.next = res
+            res = head
+            # save the carry for the next operator
+            total = carry
+        return res.next if carry == 0 else res
