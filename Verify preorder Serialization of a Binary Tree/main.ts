@@ -23,7 +23,6 @@
 function isValidSerialization(preorder: string): boolean {
    const st: string[] = []
    const preorderList = preorder.split(',')
-   console.log(preorderList)
    for (let i = preorderList.length - 1; i >= 0; i -= 1) {
       if (st.length >= 2 &&
           !Number.isNaN(Number(preorderList[i])) &&
