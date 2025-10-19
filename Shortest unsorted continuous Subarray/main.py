@@ -31,3 +31,27 @@ class Solution:
         while end < len(nums) - 1 and nums[end + 1] < max_value:
             end += 1
         return end - start + 1
+
+    def find_unsorted_subarray_stack(self, nums: list[int]) -> int:
+        n = len(nums)
+        if n <= 1:
+            return 0
+        left = n
+        stack = []
+        # monotonic increasing stack to find first index where order breaks from the left
+        for i in range(n):
+            while stack and nums[stack[-1]] > nums[i]:
+                left = min(left, stack.pop())
+            stack.append(i)
+        # if left never updated, array is already sorted
+        if left == n:
+            return 0
+        right = -1
+        stack = []
+        # monotonic decreasing stack to find first index where order breaks from the right
+        for i in range(n - 1, -1, -1):
+            while stack and nums[stack[-1]] < nums[i]:
+                right = max(right, stack.pop())
+            stack.append(i)
+
+        return right - left + 1
