@@ -23,5 +23,17 @@
  */
 
 function nextGreaterElements(nums: number[]): number[] {
-   const decreasing = []
+   const decreasing: typeof nums = []
+   const n = nums.length
+   const res: typeof nums = new Array(n).fill(-1)
+   for (let i = 2 * n - 1; i >= 0; i--) {
+      while (decreasing.length && decreasing.at(-1)! <= nums[i % n]) {
+         decreasing.pop()
+      }
+      res[i % n] = decreasing.length ? decreasing.at(-1)! : -1
+      decreasing.push(nums[i % n])
+   }
+   return res
 }
+
+console.log(nextGreaterElements([1, 2, 3, 4, 3]))
