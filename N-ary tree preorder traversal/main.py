@@ -31,6 +31,7 @@ class Node:
         self.children = children
 
 class Solution:
+    # iterative, stack
     def preorder(self, root: Node) -> list[int]:
         stack = [root]
         res = []
@@ -41,4 +42,16 @@ class Solution:
             res.append(node.val)
             while node.children:
                 stack.append(node.children.pop())
+        return res
+
+    # recursion
+    def preorder2(self, root: Node) -> list[int]:
+        res = []
+        def recur(node: Node):
+            if not node:
+                return
+            res.append(node.val)
+            for child in node.children:
+                recur(child)
+        recur(root)
         return res
