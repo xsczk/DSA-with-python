@@ -38,6 +38,7 @@ class TreeNode:
 
 
 class Solution:
+    # recursion
     # time complexity: O(n^2) in worst case (sorted nums)
     def construct_maximum_binaryTree(self, nums: list[int]) -> Optional[TreeNode]:
         if not nums:
@@ -53,3 +54,23 @@ class Solution:
             left=self.construct_maximum_binaryTree(nums[:i]),
             right=self.construct_maximum_binaryTree(nums[i + 1:]),
         )
+
+    # monotonic decrease stack
+    # time complexity: O(n)
+    def construct_maximum_binaryTree2(self, nums: list[int]) -> Optional[TreeNode]:
+        max_stack: list[TreeNode] = []
+        for num in nums:
+            node = TreeNode(val=num)
+            while max_stack and max_stack[-1].val < num:
+                l_tree = max_stack.pop()
+                if not max_stack or max_stack[-1].val > num:
+                    # the l_tree will be the left subtree of node because its value < node's value
+                    node.left = l_tree
+            if max_stack:
+                # node will become right subtree of the last pushed tree in max_stack
+                max_stack[-1].right = node
+            max_stack.append(node)
+        # because the stack is kept in decreasing order,
+        # the earliest pushed node at the bottom is the global maximum
+        # and becomes the tree's root.
+        return max_stack[0]
