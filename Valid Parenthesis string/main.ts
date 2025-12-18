@@ -46,3 +46,22 @@ function checkValidString(s: string): boolean {
     }
     return !openBrackets.length
 }
+
+// two pointers
+function checkValidString2(s: string): boolean {
+    let openCount = 0
+    let closeCount = 0
+    const n = s.length
+    for (let i = 0; i < n; i++) {
+        /** treat * as ( */
+        if (s[i] == '(' || s[i] == '*') openCount++
+        else {
+            if (--openCount < 0) return false
+        }
+        /** treat * as ) */
+        if (s[n - i - 1] == '(') {
+            if (--closeCount < 0) return false
+        } else closeCount++
+    }
+    return true
+}

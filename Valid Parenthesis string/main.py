@@ -57,3 +57,24 @@ class Solution:
             if open_brackets.pop() > asterisks.pop():
                 return False
         return not open_brackets
+
+    # two pointers
+    # time complexity: O(n)
+    # space complexity: O(1)
+    def checkValidString2(self, s: str) -> bool:
+        open_count = close_count = 0
+        n = len(s)
+        for i in range(n):
+            # treat * as (
+            if s[i] == '(' or s[i] == '*':
+                open_count += 1
+            else:
+                open_count -= 1
+                if open_count < 0: return False
+            # treat * as )
+            if s[n - i - 1] == '(':
+                close_count -= 1
+                if close_count < 0: return False
+            else:
+                close_count += 1
+        return True
