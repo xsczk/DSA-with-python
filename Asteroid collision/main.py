@@ -38,6 +38,7 @@ Constraints:
 - asteroids[i] != 0
 """
 
+
 class Solution:
     # stack
     # both time and complexity are O(n)
@@ -62,4 +63,20 @@ class Solution:
                 if (previous == asteroid * -1) or (res and res[-1] > 0):
                     continue
             res.append(asteroid)
+        return res
+
+    def asteroid_collision_simplify(self, asteroids: list[int]) -> list[int]:
+        res = []
+        for asteroid in asteroids:
+            while res and res[-1] > 0 > asteroid:
+                # 10, -5
+                if -asteroid < res[-1]:
+                    break
+                # 8, -8
+                elif -asteroid == res[-1]:
+                    res.pop()
+                    break
+                res.pop()
+            else:
+                res.append(asteroid)
         return res
