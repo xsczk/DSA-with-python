@@ -46,3 +46,21 @@ class Solution:
                 # calc outer scope based on inner scope's score
                 res[i] += res[i + 1] + max(res[i + 1], 1)
         return res[0]
+
+    # stack
+    # time complexity: O(n)
+    # space complexity: O(n)
+    def score_of_parentheses2(self, s: str) -> int:
+        # store each scope's score
+        stack = []
+        cur = 0
+        for c in s:
+            if c == '(':
+                # new scope added to the stack
+                stack.append(cur)
+                cur = 0
+            else:
+                # stack.pop() is an inner scope or a previous scope;
+                # cur is current scope
+                cur = cur + max(1, cur) + stack.pop()
+        return cur
